@@ -1,4 +1,4 @@
-let ProjectHandler = (function() {
+const ProjectHandler = (function() {
 	
 
 	function getAll() {
@@ -12,9 +12,14 @@ let ProjectHandler = (function() {
 		return Api.post("projects", data).then(data => data.project);
 	}
 
+	function load(projectId) {
+		return Api.get(`project/${projectId}`).then(data => data.project);
+	}
+
 
 	return {
 		getAll: getAll,
-		createNew: createNew
+		createNew: createNew,
+		load: load
 	};
 }());

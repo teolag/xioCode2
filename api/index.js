@@ -7,6 +7,7 @@ router.use('*', (req, res , next) => {
 });
 
 
+router.use('/project', require('./project'));
 router.use('/projects', require('./projects'));
 //router.use('/files', require('./files'));
 

@@ -1,6 +1,6 @@
 {
 	"name": "xioCode2",
-	"script": "server/app.js",
-	"watch": "server",
-	"ignore_watch": ["server/db"]
+	"script": "app.js",
+	"watch": true,
+	"ignore_watch": ["database", "public"]
 }

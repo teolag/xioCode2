@@ -1,5 +1,7 @@
 const router = require('express').Router();
-const handler = require('../model/project-handler');
+const handler = require('../handler/project-handler');
+const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json();
 		
 router.get('/', function(req, res) {
 	let projects = handler.getAll();
@@ -7,8 +9,10 @@ router.get('/', function(req, res) {
 	res.json({status: "All projects", projects});
 });
 
-router.post('/', function(req, res) {
+router.post('/', jsonParser, function(req, res) {
 	let name = req.body.name;
+
+	if(!name) res.send("No name!");
 
 	handler.create(name, req.user).then(project => {
 		res.json({status: "new project created", project});

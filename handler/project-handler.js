@@ -4,14 +4,12 @@ const fs = require('fs');
 const path = require('path');
 
 
-
 module.exports = (function() {
-	
 	
 	function create(name, creator) {
 		let project = {
 			name, 
-			creator: {name: creator.name, id: creator._id}, 
+			creator: {name: creator.name, googleId: creator.googleId}, 
 			created: new Date(), 
 			id: name2id(name)
 		};
@@ -51,7 +49,7 @@ module.exports = (function() {
 		});
 	}
 
-	function loadProject(id) {
+	function get(id) {
 		let projectsFolder = config.projectsFolder
 		let projectFolder = path.join(projectsFolder, id);
 		let projectFile = path.join(projectFolder, 'xioCode.json');
@@ -68,7 +66,7 @@ module.exports = (function() {
 		if(fs.existsSync(projectsFolder)) {
 			return fs.readdirSync(projectsFolder)
 				.filter(file => fs.statSync(path.join(projectsFolder, file)).isDirectory())
-				.map(folder => loadProject(folder))
+				.map(folder => get(folder))
 			;
 		} else {
 			return [];
@@ -78,7 +76,8 @@ module.exports = (function() {
 	
 	return {
 		create: create,
-		getAll: getAll
+		getAll: getAll,
+		get: get
 	}
 
 }())

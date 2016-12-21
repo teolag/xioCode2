@@ -17,15 +17,23 @@
 		</div>
 
 		<div class="project-launcher" style="display:none">
-			<button type="button" class="btnNewProject">New project</button>
+			<button type="button" class="button-new-project">New project</button>
 
 			<ul class="project-list"></ul>
 		</div>
 
+		<div class="project-page">
+			<div class="project-title"></div>
+			<button type="button" class="button-new-file">New file</button>
+			<ul class="project-files"></ul>
+		</div>
 
 		<script src="//cdn.xio.se/XI/dev/XI.PubSub.js"></script>
 		<script src="//cdn.xio.se/xioPop/dev/XioPop.js"></script>
+		<script>XI.pubSubDebug(false);</script>
 		<script src="/js/api.js"></script>
+		<script src="/js/nav.js"></script>
+		<script src="/js/project-page.js"></script>
 		<script src="/js/project-handler.js"></script>
 		<script src="/js/projects.js"></script>
 		<script src="/js/user-box.js"></script>

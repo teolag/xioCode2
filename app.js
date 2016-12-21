@@ -9,7 +9,7 @@ const routes = require('./routes');
 const flash = require('connect-flash');
 
 const db = {
-    users: new Datastore({ filename: 'server/db/users', autoload: true })
+    users: new Datastore({ filename: 'database/users', autoload: true })
 };
 
 app.use(function(req, res, next) {
@@ -22,6 +22,8 @@ app.use(session({secret: 'keyboard cat', resave: true, saveUninitialized: true})
 app.use(express.static('public'));
 app.use(flash());
 
+
+app.use(passport.initialize());
 passport.use(new GoogleStrategy(config.googleOAuth,
     function(accessToken, refreshToken, profile, done) {
         process.nextTick(function () {

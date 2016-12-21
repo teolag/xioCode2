@@ -1,9 +1,15 @@
 let Projects = (function() {
 	let projects = [];
-	const btnNewProject = document.querySelector(".btnNewProject");
+	const btnNewProject = document.querySelector(".button-new-project");
 	const projectLauncher = document.querySelector(".project-launcher");
 	const projectList = document.querySelector(".project-list");
 
+	projectList.addEventListener("click", e => {
+		const projectId = e.target.dataset.id		
+		if(!projectId) return;
+
+		Nav.goto(`/project/${projectId}`);
+	});
 	
 
 	XI.listen("userLogin", payload => {

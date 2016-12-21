@@ -9,6 +9,9 @@ Element.prototype.show = function() {
 
 
 
+Nav.parseURI();
+
+
 
 const loginbox = document.querySelector(".loginbox");
 

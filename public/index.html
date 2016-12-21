@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+	<head>
+		<title>xioCode2</title>
+		<link rel = "stylesheet" type = "text/css" href = "//cdn.xio.se/xioPop/dev/XioPop.css" />
+	</head>
+	<body>
+
+		<div class="userbox" style="display:none">
+			<span class="user-name"></span>
+			<span class="user-email"></span>
+			<a href="/logout">Logout</a>
+		</div>
+
+		<div class="loginbox" style="display:none">
+			<a href="/login/google">Login using Google</a>
+		</div>
+
+		<div class="project-launcher" style="display:none">
+			<button type="button" class="btnNewProject">New project</button>
+
+			<ul class="project-list"></ul>
+		</div>
+
+
+		<script src="//cdn.xio.se/XI/dev/XI.PubSub.js"></script>
+		<script src="//cdn.xio.se/xioPop/dev/XioPop.js"></script>
+		<script src="/js/api.js"></script>
+		<script src="/js/project-handler.js"></script>
+		<script src="/js/projects.js"></script>
+		<script src="/js/user-box.js"></script>
+		<script src="/js/main.js"></script>
+	</body>
+</html>

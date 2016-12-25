@@ -3,7 +3,12 @@ const ProjectPage = (function() {
 	const container = document.querySelector(".project-page");
 	const projectFiles = document.querySelector(".project-files");
 	const projectTitle = document.querySelector(".project-title");
+	const projectEditors = document.querySelector(".project-editors");
 	const btnNewFile = document.querySelector(".button-new-file");
+	const files = [];
+	const editors = [];
+	let activeEditor;
+	let activeProject;
 	
 	btnNewFile.addEventListener("click", createNewFile);
 
@@ -23,18 +28,35 @@ const ProjectPage = (function() {
 
 	function openProject(projectId) {
 		ProjectHandler.load(projectId).then(project => {
-			projectTitle.textContent = project.name;
+			if(project) {
+				projectTitle.textContent = project.name;
+				activeProject = project;
+			} else {
+				console.warn("No project found");
+			}
 		});
-		//FileHandler.loadProjectFiles(projectId);
+		ProjectHandler.getProjectFiles(projectId).then(files => {
+			console.log("Files", files);
+		});
 	}
 
 
 	function createNewFile() {
 		console.log("NEW FILE!!");
+		if(!activeEditor) {
+			let editor = new Editor(projectEditors);
+			editors.push(editor);
+			activeEditor = editor;
+		}
+		activeEditor.newFile();
+	}
+
+	function getActiveProject() {
+		return activeProject;
 	}
 
 
 	return {
-
+		getActiveProject: getActiveProject
 	}
 }());

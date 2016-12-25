@@ -18,17 +18,17 @@ module.exports = (function() {
 			.then(() => createJSONfile(project));		
 	}
 
-	function getPath(project) {
-		return path.join(config.projectsFolder, project.id);
+	function getPath(projectId) {
+		return path.join(config.projectsFolder, projectId);
 	}
 
 	function getJSONfile(project) {
-		return path.join(getPath(project), 'xioCode.json');
+		return path.join(getPath(project.id), 'xioCode.json');
 	}
 
 
 	function createFolder(project) {
-		let projectPath = getPath(project);
+		let projectPath = getPath(project.id);
 		return mkdir(projectPath).catch(err => {
 			console.error("Error creating folder", projectPath, err);
 		});
@@ -52,6 +52,7 @@ module.exports = (function() {
 	function get(id) {
 		let projectsFolder = config.projectsFolder
 		let projectFolder = path.join(projectsFolder, id);
+		if(!fs.existsSync(projectFolder)) return;
 		let projectFile = path.join(projectFolder, 'xioCode.json');
 		let contents = fs.readFileSync(projectFile);
 		let project = JSON.parse(contents);
@@ -73,10 +74,15 @@ module.exports = (function() {
 		}
 	}
 
+	function getProjectFiles(projectId) {
+		return fs.readdirSync(getPath(projectId));
+	}
+
 	
 	return {
 		create: create,
 		getAll: getAll,
+		getProjectFiles: getProjectFiles,
 		get: get
 	}
 

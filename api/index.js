@@ -9,6 +9,7 @@ router.use('*', (req, res , next) => {
 
 router.use('/project', require('./project'));
 router.use('/projects', require('./projects'));
+router.use('/file', require('./file'));
 //router.use('/files', require('./files'));
 
 module.exports = router;

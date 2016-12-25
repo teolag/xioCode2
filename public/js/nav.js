@@ -6,8 +6,8 @@ const Nav = (function() {
 	
 	addEventListener("popstate", popState);
 	
-	function popState(a, b, c) {
-		console.log("POPstate", a, b ,c);
+	function popState(e) {
+		console.log("POPstate", e);
 		parseURI();
 	}
 

@@ -16,9 +16,14 @@ const ProjectHandler = (function() {
 		return Api.get(`project/${projectId}`).then(data => data.project);
 	}
 
+	function getProjectFiles(projectId) {
+		return Api.get(`project/files/${projectId}`).then(data => data.files);
+	}
+
 
 	return {
 		getAll: getAll,
+		getProjectFiles: getProjectFiles,
 		createNew: createNew,
 		load: load
 	};

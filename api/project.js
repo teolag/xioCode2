@@ -1,7 +1,5 @@
 const router = require('express').Router();
 const handler = require('../handler/project-handler');
-//const bodyParser = require('body-parser');
-//const jsonParser = bodyParser.json();
 		
 router.get('/:projectId', function(req, res) {
 	const project = handler.get(req.params.projectId);
@@ -13,7 +11,7 @@ router.get('/:projectId', function(req, res) {
 	}
 });
 
-router.get('/files/:projectId', function(req, res) {
+router.get('/:projectId/files', function(req, res) {
 	const files = handler.getProjectFiles(req.params.projectId);
 	res.json({status: "Project file tree", files});
 });

@@ -1,4 +1,7 @@
-let Projects = (function() {
+const ProjectHandler = require("./project-handler");
+const Nav = require("./nav");
+
+const Projects = (function() {
 	let projects = [];
 	const btnNewProject = document.querySelector(".button-new-project");
 	const projectLauncher = document.querySelector(".project-launcher");
@@ -56,6 +59,6 @@ let Projects = (function() {
 		return -1;
 	}
 
-
-
 }());
+
+module.exports = Projects;

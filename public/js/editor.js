@@ -1,17 +1,34 @@
+const FileHandler = require("./file-handler");
+
+require('codemirror/mode/xml/xml');
+require('codemirror/mode/javascript/javascript');
+require('codemirror/mode/css/css');
+require('codemirror/mode/htmlmixed/htmlmixed');
+const CodeMirror = require('codemirror/lib/codemirror');
+
 class Editor {
 	
-	constructor(parent) {
+	constructor(parentProjectPage) {
+		this.parentProjectPage = parentProjectPage;
 		this.openedFiles = [];
 		this.activeFile = null;
 
+		const parent = document.querySelector(".project-editors");
 		const template = document.getElementById("tplEditor");
 		const editor = document.importNode(template.content, true);
 
-		this.textarea = editor.querySelector(".editor-textarea");
 		this.tabBar = editor.querySelector(".editor-opened-files");
 		this.tabBar.addEventListener("click", this._tabClick.bind(this));
 		this.saveButton = editor.querySelector(".editor-save");
 		this.saveButton.addEventListener("click", this.saveFile.bind(this));
+		this.codeMirror = new CodeMirror(editor, {
+			lineNumbers: true,
+			extraKeys: {
+				"Cmd-S"		: "shortcutSave",
+				"Ctrl-S"	: "shortcutSave"
+			}
+		});
+		this.codeMirror.editor = this;
 
 		parent.appendChild(editor);
 	}
@@ -20,21 +37,21 @@ class Editor {
 		const file = {dirty: false};
 		this.openedFiles.push(file);
 		this.activeFile = file;
-
+		file.doc = CodeMirror.Doc("");
+		this.codeMirror.swapDoc(file.doc);
 		this.openedFiles.push(file);
 		updateTabBar();
 	}
 
 	saveFile() {
 		if(!this.activeFile) return;
-		this.activeFile.content = this.textarea.value;
-		const project = ProjectPage.getActiveProject();
-		if(!project) return;
+		const projectId = this.parentProjectPage.project.id;
+		if(!projectId) return;
 
 		if(!this.activeFile.uri) {
 			this.saveFileAs();
 		} else {
-			FileHandler.save(this.activeFile.uri, this.activeFile.content, project.id).then(data => {
+			FileHandler.save(this.activeFile.uri, this.activeFile.doc.getValue(), projectId).then(data => {
 				console.log("Save callback", data);
 			})
 		}
@@ -43,11 +60,10 @@ class Editor {
 	
 	saveFileAs() {
 		if(!this.activeFile) return;
-		this.activeFile.content = this.textarea.value;
-		const project = ProjectPage.getActiveProject();
-		if(!project) return;
+		const projectId = this.parentProjectPage.project.id;
+		if(!projectId) return;
 
-		FileHandler.saveAs(this.activeFile.content, project.id).then(data => {
+		FileHandler.saveAs(this.activeFile.doc.getValue(), projectId).then(data => {
 			console.log("SaveAs callback", data);
 		});
 	}
@@ -56,8 +72,10 @@ class Editor {
 		this.activeFile = file;
 		if(!this.openedFiles.find(f => f.uri===file.uri)) {
 			this.openedFiles.push(file);
+			file.doc = CodeMirror.Doc(file.content);
+			delete file.content;
 		}
-		this.textarea.value = file.content;
+		this.codeMirror.swapDoc(file.doc);
 		this.updateTabBar();
 	}
 
@@ -71,6 +89,17 @@ class Editor {
 		const uri = e.target.dataset.uri;
 		if(!uri) return;
 
-		ProjectPage.openFile(uri);
+		this.parentProjectPage.openFile(uri);
 	}
 }
+
+module.exports = Editor;
+
+
+
+
+
+CodeMirror.commands.shortcutSave = function(instance) {
+	console.log("Ctrl/Cmd+s pressed", instance);
+	instance.editor.saveFile();
+};

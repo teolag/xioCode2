@@ -49,3 +49,5 @@ const Api = (function() {
 		put: put
 	}
 }());
+
+module.exports = Api;

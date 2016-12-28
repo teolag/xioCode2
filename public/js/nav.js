@@ -28,3 +28,5 @@ const Nav = (function() {
 		parseURI: parseURI
 	}
 }());
+
+module.exports = Nav;

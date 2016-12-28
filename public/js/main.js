@@ -1,3 +1,8 @@
+const Nav = require("./nav");
+require("./projects");
+const ProjectPage = require("./project-page");
+const projectPages = {};
+let activeProjectPage = null;
 
 Element.prototype.hide = function() {
 	this.style.display = 'none';	
@@ -11,6 +16,22 @@ Element.prototype.show = function() {
 
 Nav.parseURI();
 
+
+XI.listen(["navigate","userLogin"], payloads => {
+	let uriParts = payloads[0];
+	if(uriParts[0]==='project') {
+		const projectId = uriParts[1];
+		console.log("Load project", projectId);
+
+		if(projectPages[projectId]) {
+			activeProjectPage = projectPages[projectId];
+		} else {
+			activeProjectPage = new ProjectPage(projectId);
+			projectPages[projectId] = activeProjectPage;
+		}
+		activeProjectPage.show();
+	}
+}, true);
 
 
 const loginbox = document.querySelector(".loginbox");

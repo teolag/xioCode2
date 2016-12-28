@@ -7,18 +7,18 @@ const path = require('path');
 
 		
 router.post('/', jsonParser, function(req, res) {
-	const filename = req.body.filename;
+	const uri = req.body.uri;
 	const content = req.body.content;
 	const projectId = req.params.projectId;
 	const overwrite = req.body.overwrite;
 
-	const uri = path.join(config.projectsFolder, projectId, filename);
+	const fullURI = path.join(config.projectsFolder, projectId, uri);
 
-	const exists = handler.fileExists(uri);
+	const exists = handler.fileExists(fullURI);
 
 
 	if(!exists || overwrite) {
-		handler.save(uri, content).then(data => {
+		handler.save(fullURI, content).then(data => {
 			res.status = 201;
 			res.json({status: "File created"});
 		});
@@ -27,15 +27,15 @@ router.post('/', jsonParser, function(req, res) {
 	}
 });
 
-router.put('/:filename', jsonParser, function(req, res) {
+router.put('/:uri', jsonParser, function(req, res) {
 	const projectId = req.params.projectId;
-	const filename = req.params.filename;
+	const uri = req.params.uri;
 	const content = req.body.content;
-	const uri = path.join(config.projectsFolder, projectId, filename);
-	const exists = handler.fileExists(uri);
+	const fullURI = path.join(config.projectsFolder, projectId, uri);
+	const exists = handler.fileExists(fullURI);
 
 	if(exists) {
-		handler.save(uri, content).then(data => {
+		handler.save(fullURI, content).then(data => {
 			res.status = 201;
 			res.json({status: "File updated"});
 		});
@@ -45,16 +45,16 @@ router.put('/:filename', jsonParser, function(req, res) {
 	}
 });
 
-router.get('/:filename', function(req, res) {
+router.get('/:uri', function(req, res) {
 	const projectId = req.params.projectId;
-	const filename = req.params.filename;
-	const uri = path.join(config.projectsFolder, projectId, filename);
+	const uri = req.params.uri;
+	const fullURI = path.join(config.projectsFolder, projectId, uri);
 
-	const exists = handler.fileExists(uri);
+	const exists = handler.fileExists(fullURI);
 
 	if(exists) {
-		handler.open(uri).then(content => {
-			const file = {uri: filename, content};
+		handler.open(fullURI).then(content => {
+			const file = {uri: uri, content};
 			res.status(200);
 			res.json({status: "File loaded", file});
 		});

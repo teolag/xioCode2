@@ -1,0 +1,19 @@
+.editor-opened-files {
+	display: flex;
+	padding: 0;
+}
+
+.editor-opened-files li {
+	list-style-type: none;
+	padding: 0.2rem 0.9rem;
+	background-color: #e0ccea;
+	border-radius: 1rem 1rem 0 0;
+	margin-right: -0.5rem;
+	border: 1px solid black;
+	cursor: pointer;
+}
+
+.editor-opened-files li.active {
+	background-color: aliceblue;
+	z-index: 1;
+}

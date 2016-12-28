@@ -1,3 +1,5 @@
+const Api = require("./api");
+
 const FileHandler = (function() {
 	
 	function saveAs(content, projectId) {
@@ -37,3 +39,5 @@ const FileHandler = (function() {
 		open: open
 	};
 }());
+
+module.exports = FileHandler;

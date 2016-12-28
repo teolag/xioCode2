@@ -36,9 +36,14 @@ router.use('/api', passport.session(), require('./api'));
 
 router.use(express.static('public'));
 
+router.get('/codemirror/css', function(req, res){
+  res.sendFile(__dirname + '/node_modules/codemirror/lib/codemirror.css');
+});
+
 router.get('*', function(req, res){
   res.sendFile(__dirname + '/public/index.html');
 });
+
 
 
 

@@ -1,22 +1,25 @@
 {
-  "name": "teodor",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "xioCode2",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "pm2 start pm2.json",
+    "js": "browserify public/js/main.js -o public/js/bundle.js",
+    "watch-js": "watchify public/js/main.js -o public/js/bundle.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Teodor Lagerqvist",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "codemirror": "^5.22.0",
     "connect-flash": "^0.1.1",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
     "mkdir-promise": "^1.0.0",
     "nedb-promise": "^2.0.0",
     "passport": "^0.3.2",
-    "passport-google-oauth": "^1.0.0",
-    "passport-local": "^1.0.0"
+    "passport-google-oauth": "^1.0.0"
+  },
+  "devDependencies": {
+    "browserify": "latest",
+    "watchify": "latest"
   }
 }

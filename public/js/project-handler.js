@@ -1,3 +1,5 @@
+const Api = require("./api");
+
 const ProjectHandler = (function() {
 	
 
@@ -28,3 +30,5 @@ const ProjectHandler = (function() {
 		load: load
 	};
 }());
+
+module.exports = ProjectHandler;

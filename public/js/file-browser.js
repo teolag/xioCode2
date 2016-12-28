@@ -1,34 +1,39 @@
-const FileBrowser = (function() {
-	const container = document.querySelector(".file-browser");
-	const list = document.querySelector(".files");
-	const btnNewFolder = document.querySelector(".button-new-folder");
-	
-	btnNewFolder.addEventListener("click", createNewFolder);
-	list.addEventListener("click", fileClick);
-	
-	
+const FileHandler = require("./file-handler");
+//const ProjectPage = require("./project-page");
 
-	XI.listen("projectFilesUpdated", payloads => {
-		let files = payloads[0];
-		updateFileList(files);
-	}, true);
+class FileBrowser {
 
-	
+	constructor(parentProjectPage) {
+		this.parentProjectPage = parentProjectPage;
+		this.list = parentProjectPage.container.querySelector(".files");
+		this.btnNewFolder = parentProjectPage.container.querySelector(".button-new-folder");
+		
+		this.btnNewFolder.addEventListener("click", this.createNewFolder.bind(this));
+		this.list.addEventListener("click", this.fileClick.bind(this));
+		
 
-	function updateFileList(files) {
-		list.innerHTML = files.map(file => {
+		XI.listen("projectFilesUpdated", payloads => {
+			let files = payloads[0];
+			this.updateFileList(files);
+		}, true);
+	}
+
+	updateFileList(files) {
+		this.list.innerHTML = files.map(file => {
 			return `<li data-uri='${file}'>${file}</li>`;
 		}).join('');
 	}
 
-	function createNewFolder() {
+	createNewFolder() {
 		console.log("NEW FOLDER!!");
+		FileHandler.createFolder();
 	}
 
-	function fileClick(e) {
+	fileClick(e) {
 		const uri = e.target.dataset.uri;
 		if(!uri) return;
-		ProjectPage.openFile(uri);
+		this.parentProjectPage.openFile(uri);
 	}
+};
 
-}());
+module.exports = FileBrowser;

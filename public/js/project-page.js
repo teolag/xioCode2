@@ -22,7 +22,7 @@ class ProjectPage {
 		this.openProject(projectId);
 		this.loadProjectFiles(projectId);
 		
-		this.btnNewFile.addEventListener("click", this.newBlankFile);
+		this.btnNewFile.addEventListener("click", this.newBlankFile.bind(this));
 
 		parent.appendChild(page);
 	}
@@ -30,7 +30,7 @@ class ProjectPage {
 	loadProjectFiles(projectId) {
 		ProjectHandler.getProjectFiles(projectId).then(fileList => {
 			this.files = fileList;
-			XI.fire("projectFilesUpdated", this.files);
+			this.fileBrowser.updateFileList(fileList);
 			console.log("Files", this.files);
 		});
 	}

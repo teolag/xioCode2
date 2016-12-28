@@ -1,7 +1,8 @@
 const Nav = require("./nav");
-require("./projects");
 const ProjectPage = require("./project-page");
 const projectPages = {};
+require("./projects");
+
 let activeProjectPage = null;
 
 Element.prototype.hide = function() {
@@ -13,9 +14,7 @@ Element.prototype.show = function() {
 };
 
 
-
 Nav.parseURI();
-
 
 XI.listen(["navigate","userLogin"], payloads => {
 	let uriParts = payloads[0];

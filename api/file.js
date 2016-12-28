@@ -20,7 +20,7 @@ router.post('/', jsonParser, function(req, res) {
 	if(!exists || overwrite) {
 		handler.save(fullURI, content).then(data => {
 			res.status = 201;
-			res.json({status: "File created"});
+			res.json({status: "File created", uri});
 		});
 	} else {
 		res.json({status: "File exists"});
@@ -36,8 +36,8 @@ router.put('/:uri', jsonParser, function(req, res) {
 
 	if(exists) {
 		handler.save(fullURI, content).then(data => {
-			res.status = 201;
-			res.json({status: "File updated"});
+			res.status = 200;
+			res.json({status: "File updated", uri});
 		});
 	} else {
 		res.status(404);

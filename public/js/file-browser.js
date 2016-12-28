@@ -11,11 +11,6 @@ class FileBrowser {
 		this.btnNewFolder.addEventListener("click", this.createNewFolder.bind(this));
 		this.list.addEventListener("click", this.fileClick.bind(this));
 		
-
-		XI.listen("projectFilesUpdated", payloads => {
-			let files = payloads[0];
-			this.updateFileList(files);
-		}, true);
 	}
 
 	updateFileList(files) {

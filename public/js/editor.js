@@ -1,5 +1,6 @@
 const FileHandler = require("./file-handler");
 
+require('codemirror/mode/meta');
 require('codemirror/mode/xml/xml');
 require('codemirror/mode/javascript/javascript');
 require('codemirror/mode/css/css');
@@ -29,42 +30,48 @@ class Editor {
 			}
 		});
 		this.codeMirror.editor = this;
+		this.unsavedId = 1;
 
 		parent.appendChild(editor);
 	}
 
 	newFile() {
-		const file = {dirty: false};
-		this.openedFiles.push(file);
+		const file = {unsaved: true, uri: `unsaved${this.unsavedId++}`};
 		this.activeFile = file;
 		file.doc = CodeMirror.Doc("");
 		this.codeMirror.swapDoc(file.doc);
 		this.openedFiles.push(file);
-		updateTabBar();
+		this.updateTabBar();
 	}
 
 	saveFile() {
-		if(!this.activeFile) return;
+		const file = this.activeFile;
+		if(!file) return;
 		const projectId = this.parentProjectPage.project.id;
 		if(!projectId) return;
 
-		if(!this.activeFile.uri) {
+		if(!file.uri===undefined || file.unsaved) {
 			this.saveFileAs();
 		} else {
-			FileHandler.save(this.activeFile.uri, this.activeFile.doc.getValue(), projectId).then(data => {
+			FileHandler.save(file.uri, file.doc.getValue(), projectId).then(data => {
 				console.log("Save callback", data);
-			})
+			});
 		}
-		console.log("save file", this.activeFile);
+		console.log("save file", file);
 	}
 	
 	saveFileAs() {
-		if(!this.activeFile) return;
+		const file = this.activeFile;
+		if(!file) return;
 		const projectId = this.parentProjectPage.project.id;
 		if(!projectId) return;
 
-		FileHandler.saveAs(this.activeFile.doc.getValue(), projectId).then(data => {
+		FileHandler.saveAs(file.doc.getValue(), projectId).then(data => {
 			console.log("SaveAs callback", data);
+			file.uri = data.uri;
+			delete file.unsaved;
+			this.codeMirror.setOption("mode", getMimeByUri(file.uri));
+			this.updateTabBar();
 		});
 	}
 
@@ -72,7 +79,7 @@ class Editor {
 		this.activeFile = file;
 		if(!this.openedFiles.find(f => f.uri===file.uri)) {
 			this.openedFiles.push(file);
-			file.doc = CodeMirror.Doc(file.content);
+			file.doc = CodeMirror.Doc(file.content, getMimeByUri(file.uri));
 			delete file.content;
 		}
 		this.codeMirror.swapDoc(file.doc);
@@ -88,15 +95,30 @@ class Editor {
 	_tabClick(e) {
 		const uri = e.target.dataset.uri;
 		if(!uri) return;
-
-		this.parentProjectPage.openFile(uri);
+		let openedFile = this.openedFiles.find(f => f.uri===uri);
+		if(openedFile) {
+			this.openFile(openedFile);
+		} else {
+			this.parentProjectPage.openFile(uri);
+		}
 	}
 }
 
 module.exports = Editor;
 
 
-
+function getMimeByUri(uri) {
+	var extension = /\.([^.]+)$/.exec(uri);
+	if(!extension) return "";
+	var info = CodeMirror.findModeByExtension(extension[1]);
+	if(!info) {
+		switch(extension[1]) {
+			case "svg": return "xml";
+		}
+	}
+	if(info && info.mime==="text/x-sql") return "text/x-sql";
+	return info? info.mode : "";
+}
 
 
 CodeMirror.commands.shortcutSave = function(instance) {

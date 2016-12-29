@@ -6,6 +6,7 @@ require('codemirror/mode/javascript/javascript');
 require('codemirror/mode/css/css');
 require('codemirror/mode/htmlmixed/htmlmixed');
 const CodeMirror = require('codemirror/lib/codemirror');
+CodeMirror.modeInfo.find(m => m.name === "XML").ext.push("svg");
 
 class Editor {
 	
@@ -24,6 +25,9 @@ class Editor {
 		this.saveButton.addEventListener("click", this.saveFile.bind(this));
 		this.codeMirror = new CodeMirror(editor, {
 			lineNumbers: true,
+			indentWithTabs: true,
+			tabSize: 4,
+			indentUnit: 4,
 			extraKeys: {
 				"Cmd-S"		: "shortcutSave",
 				"Ctrl-S"	: "shortcutSave"
@@ -53,6 +57,7 @@ class Editor {
 		if(!file.uri===undefined || file.unsaved) {
 			this.saveFileAs();
 		} else {
+			this.codeMirror.execCommand("removeTrailingSpaces");
 			FileHandler.save(file.uri, file.doc.getValue(), projectId).then(data => {
 				console.log("Save callback", data);
 			});
@@ -66,6 +71,7 @@ class Editor {
 		const projectId = this.parentProjectPage.project.id;
 		if(!projectId) return;
 
+		this.codeMirror.execCommand("removeTrailingSpaces");
 		FileHandler.saveAs(file.doc.getValue(), projectId).then(data => {
 			console.log("SaveAs callback", data);
 			file.uri = data.uri;
@@ -83,6 +89,7 @@ class Editor {
 			delete file.content;
 		}
 		this.codeMirror.swapDoc(file.doc);
+		console.log("Swap to %s, with mode %s", file.uri, file.doc.getMode().name);
 		this.updateTabBar();
 	}
 
@@ -108,20 +115,19 @@ module.exports = Editor;
 
 
 function getMimeByUri(uri) {
-	var extension = /\.([^.]+)$/.exec(uri);
-	if(!extension) return "";
-	var info = CodeMirror.findModeByExtension(extension[1]);
-	if(!info) {
-		switch(extension[1]) {
-			case "svg": return "xml";
-		}
-	}
-	if(info && info.mime==="text/x-sql") return "text/x-sql";
-	return info? info.mode : "";
+	const info = CodeMirror.findModeByFileName(uri);
+	return info ? info.mode : "none";
 }
 
 
 CodeMirror.commands.shortcutSave = function(instance) {
 	console.log("Ctrl/Cmd+s pressed", instance);
 	instance.editor.saveFile();
+};
+
+CodeMirror.commands.removeTrailingSpaces = function(editor) {
+	editor.doc.eachLine(function(line) {
+		line.text = line.text.replace(/\s+$/,"");
+   	});
+	editor.refresh();
 };

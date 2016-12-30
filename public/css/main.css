@@ -1,3 +1,117 @@
+html {
+	font: 16px sans-serif;
+	color: #444;
+}
+body {
+	margin: 0;
+}
+input, button, textarea, select {
+	font: inherit;
+}
+
+a {
+	color: #8e5f19;
+	text-decoration: none;
+	fill: #888;
+}
+a:hover {
+	text-decoration: underline;
+	fill: #8e5f19;
+}
+
+
+
+header {
+	display: flex;
+	padding: 0.5rem;
+	justify-content: space-between;
+	align-items: center;
+}
+
+
+header .page-title {
+	font-size: 2rem;
+	margin-left: 1rem;
+}
+
+
+
+
+
+
+.login-page {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	background-color: rgba(0, 0, 0, 0.3);
+	align-items: center;
+	justify-content: center;
+}
+.login-box {
+	background-color: #fff;
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 0.4rem;
+	box-shadow: 0 0.2rem 4rem rgba(0,0,0,0.3);
+	margin-bottom: 10%;
+}
+.login-box .page-title {
+	font-size: 3rem;
+}
+
+
+
+
 .xiopop {
 	z-index: 3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*****  Page Title  **************************/
+
+.page-title {
+	display: flex;
+	align-items: center;
+	cursor: default;
+	user-select: none;
+}
+
+.page-title-logo {
+	width: 1.2em;
+	height: 1.2em;
+	margin-right: 0.1em;
+}
+
+.page-title-first {
+	color: #888;
+}
+.page-title-second {
+	color: #f90;
+}
+.page-title-number {
+	color: white;
+	background-color: #888;
+	border-radius: 50%;
+	font-size: 0.4em;
+	width: 1.4em;
+	height: 1.4em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	align-self: flex-start;
 }

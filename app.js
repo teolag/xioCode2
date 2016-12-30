@@ -32,11 +32,13 @@ passport.use(new GoogleStrategy(config.googleOAuth,
                     if(user) {
                         return done(null, user);    
                     } else {
-                        //console.log("New user!!", profile);
+                        console.log("New user!!", profile);
                         let user = {
                             googleId: profile.id,
                             name: profile.displayName,
-                            email: profile.emails[0].value
+                            email: profile.emails[0].value,
+                            photo: profile.photos[0].value,
+                            data: profile._json
                         };
                         db.users.insert(user).then((newUser) => {
                             return done(null, newUser);

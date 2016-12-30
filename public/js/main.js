@@ -1,9 +1,11 @@
 const Nav = require("./nav");
 const ProjectPage = require("./project-page");
+const UserBox = require("./user-box");
 const projectPages = {};
 require("./projects");
 
-let activeProjectPage = null;
+
+var activeProjectPage;
 
 Element.prototype.hide = function() {
 	this.style.display = 'none';	
@@ -33,7 +35,7 @@ XI.listen(["navigate","userLogin"], payloads => {
 }, true);
 
 
-const loginbox = document.querySelector(".loginbox");
+const loginPage = document.querySelector(".login-page");
 
 
 fetch('/auth', {credentials: 'same-origin'})
@@ -41,8 +43,9 @@ fetch('/auth', {credentials: 'same-origin'})
 	.then(data => {
 		if(data.status === 'authorized') {
 			XI.fire("userLogin", data.user);
+			loginPage.hide();
 		} else {
-			loginbox.show();
+			loginPage.show();
 		}
 	});
 

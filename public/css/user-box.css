@@ -1,0 +1,54 @@
+.user-box {
+	background-color: #e6e6e6;;
+	display: flex;
+	align-items: center;
+	border-radius: 2.5rem;
+	width: 3.4rem;
+	overflow: hidden;
+	transition: width 0.5s cubic-bezier(0.69, 0, 0.27, 1), opacity 0.5s linear;
+	opacity: 01.6;
+}
+
+.user-box:hover {
+	opacity: 1;
+}
+
+.user-box.open {
+	width: 20rem;
+	opacity: 1;
+}
+
+.user-data {
+	display: flex;
+	flex-direction: column;
+	margin: 0 2rem 0 0.7rem;
+	white-space: nowrap;
+	flex: 1;
+}
+.open .user-data {
+	display: flex;
+}
+
+.user-email {
+	font-size: 0.8rem;
+	color: #888;
+	flex: 1;
+}
+
+.user-photo {
+	width: 3.4rem;
+	height: 3.4rem;
+	border-radius: 1.7rem;
+	flex-shrink: 0;
+	cursor: pointer;
+}
+
+.user-logout {
+	padding: 0.4rem 0.8rem;
+}
+
+.icon-off {
+	width: 2rem;
+	height: 2rem;
+	transform: rotate(180deg);
+}

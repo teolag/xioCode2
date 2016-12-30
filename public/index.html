@@ -2,22 +2,44 @@
 <html>
 	<head>
 		<title>xioCode2</title>
+
 		<link rel="stylesheet" type="text/css" href="//cdn.xio.se/xioPop/dev/XioPop.css" />
 		<link rel="stylesheet" type="text/css" href="/css/main.css" />
 		<link rel="stylesheet" type="text/css" href="/css/editor.css" />
+		<link rel="stylesheet" type="text/css" href="/css/user-box.css" />
 		<link rel="stylesheet" type="text/css" href="/codemirror/css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	</head>
 	<body>
 
-		<div class="userbox" style="display:none">
-			<span class="user-name"></span>
-			<span class="user-email"></span>
-			<a href="/logout">Logout</a>
+		<div class="login-page" style="display:none">
+			<div class="login-box">
+				<div class="page-title">
+					<svg class="page-title-logo"><use xlink:href="/icons.svg#icon-logo"></use></svg>
+					<span class="page-title-first">xio</span><span class="page-title-second">Code</span>
+					<span class="page-title-number">2</span>
+				</div>
+				<a href="/login/google" class="google-login">Login using Google</a>
+			</div>
 		</div>
 
-		<div class="loginbox" style="display:none">
-			<a href="/login/google">Login using Google</a>
-		</div>
+		<header>
+			<div class="page-title">
+				<svg class="page-title-logo"><use xlink:href="/icons.svg#icon-logo"></use></svg>
+				<span class="page-title-first">xio</span><span class="page-title-second">Code</span>
+				<span class="page-title-number">2</span>
+			</div>
+			<div class="user-box" style="display:none">
+				<img src="" class="user-photo" />
+				<div class="user-data">
+					<span class="user-name"></span>
+					<span class="user-email"></span>
+				</div>
+				<a href="/logout" class="user-logout">
+					<svg class="icon icon-off"><use xlink:href="/icons.svg#icon-off"></use></svg>
+				</a>
+			</div>
+		</header>
 
 		<div class="project-launcher" style="display:none">
 			<button type="button" class="button-new-project">New project</button>
@@ -52,18 +74,6 @@
 		<script src="//cdn.xio.se/XI/dev/XI.PubSub.js"></script>
 		<script src="//cdn.xio.se/xioPop/dev/XioPop.js"></script>
 		<script>XI.pubSubDebug(false);</script>
-		<!--
-		<script src="/js/api.js"></script>
-		<script src="/js/nav.js"></script>
-		<script src="/js/editor.js"></script>
-		<script src="/js/project-page.js"></script>
-		<script src="/js/project-handler.js"></script>
-		<script src="/js/file-browser.js"></script>
-		<script src="/js/file-handler.js"></script>
-		<script src="/js/projects.js"></script>
-		<script src="/js/user-box.js"></script>
-		<script src="/js/main.js"></script>
-		-->
 		<script src="/js/bundle.js"></script>
 	</body>
 </html>

@@ -66,10 +66,12 @@ header .page-title {
 
 
 
+/***************  Z-WARS  ***************/
+/* codemirror scrollbars has z-index 6 */
 
-.xiopop {
-	z-index: 3;
-}
+.xiopop 				{ z-index: 8 }
+.project-launcher 		{ z-index: 7 }
+
 
 
 

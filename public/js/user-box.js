@@ -18,10 +18,10 @@ const UserBox = (function() {
 	box.addEventListener("mouseenter", e => clearTimeout(closeTimer));
 
 	function userLogout(payload) {
-		box.hide();
+
 	}
+	
 	function userLogin(payload) {
-		box.show();
 		let user = payload[0];
 		username.textContent = user.name;
 		useremail.textContent = user.email;

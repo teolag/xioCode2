@@ -20,8 +20,4 @@ router.post('/', jsonParser, function(req, res) {
 });
 
 
-router.get('/:id', function(req, res) {
-	res.json({ id: req.params.id, name: "Mitt trevlige project" });
-});
-
 module.exports = router;

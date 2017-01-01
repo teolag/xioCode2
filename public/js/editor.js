@@ -15,7 +15,7 @@ class Editor {
 		this.openedFiles = [];
 		this.activeFile = null;
 
-		const parent = document.querySelector(".project-editors");
+		const parent = parentProjectPage.container.querySelector(".project-editors");
 		const template = document.getElementById("tplEditor");
 		const editor = document.importNode(template.content, true);
 

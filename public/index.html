@@ -6,6 +6,7 @@
 		<link rel="stylesheet" type="text/css" href="//cdn.xio.se/xioPop/dev/XioPop.css" />
 		<link rel="stylesheet" type="text/css" href="/css/main.css" />
 		<link rel="stylesheet" type="text/css" href="/css/editor.css" />
+		<link rel="stylesheet" type="text/css" href="/css/project-launcher.css" />
 		<link rel="stylesheet" type="text/css" href="/css/user-box.css" />
 		<link rel="stylesheet" type="text/css" href="/codemirror/css" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,13 +24,13 @@
 			</div>
 		</div>
 
-		<header>
+		<header style="display:none">
 			<div class="page-title">
 				<svg class="page-title-logo"><use xlink:href="/icons.svg#icon-logo"></use></svg>
 				<span class="page-title-first">xio</span><span class="page-title-second">Code</span>
 				<span class="page-title-number">2</span>
 			</div>
-			<div class="user-box" style="display:none">
+			<div class="user-box">
 				<img src="" class="user-photo" />
 				<div class="user-data">
 					<span class="user-name"></span>
@@ -42,9 +43,10 @@
 		</header>
 
 		<div class="project-launcher" style="display:none">
-			<button type="button" class="button-new-project">New project</button>
-
-			<ul class="project-list"></ul>
+			<div class="project-launcher-box">
+				<button type="button" class="button-new-project">New project</button>
+				<ul class="project-list"></ul>
+			</div>
 		</div>
 
 		<div class="project-pages"></div>

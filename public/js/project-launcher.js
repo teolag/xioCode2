@@ -1,11 +1,15 @@
 const ProjectHandler = require("./project-handler");
 const Nav = require("./nav");
 
-const Projects = (function() {
+const ProjectLauncher = (function() {
 	let projects = [];
 	const btnNewProject = document.querySelector(".button-new-project");
 	const projectLauncher = document.querySelector(".project-launcher");
 	const projectList = document.querySelector(".project-list");
+
+	projectLauncher.addEventListener("click", e => {
+		if(e.target === projectLauncher) hide();
+	});
 
 	projectList.addEventListener("click", e => {
 		const projectId = e.target.dataset.id		
@@ -17,7 +21,6 @@ const Projects = (function() {
 
 	XI.listen("userLogin", payload => {
 		ProjectHandler.getAll();
-		projectLauncher.show();
 	}, true);
 
 	XI.listen("projectsLoaded", payload => {
@@ -59,6 +62,19 @@ const Projects = (function() {
 		return -1;
 	}
 
+	function show() {
+		projectLauncher.show();
+	}
+
+	function hide() {
+		projectLauncher.hide();
+	}
+
+	return {
+		show: show,
+		hide: hide
+	}
+
 }());
 
-module.exports = Projects;
+module.exports = ProjectLauncher;

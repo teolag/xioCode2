@@ -2,5 +2,11 @@
 	"name": "xioCode2",
 	"script": "app.js",
 	"watch": true,
-	"ignore_watch": ["database", "public"]
+	"ignore_watch": [
+		"database",
+		"public",
+		".git",
+		"pm2.json",
+		"package.json"
+	]
 }
